@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "Nákup",
+    "completed": true
+  },
+  {
+    "id": 2,
+    "title": "noo nic, funguje to ?",
+    "completed": false
+  }
+]

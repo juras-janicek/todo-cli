@@ -15,29 +15,30 @@ function SaveTodo(todos){
     fs.writeFileSync(todofiles, JSON.stringify(todos, null, 2))
 }
 
-function AddTodo(title){
+function addTodo(title){
     const todos = LoadTodos();
     const newTodo = {
         id: todos.length + 1,
-        title = title ,
-        complete = false
+        title: title,
+        completed: false
     }
     todos.push(newTodo)
     SaveTodo(todos)
     console.log(`quest has been append: ${title}`)
 }
 
-function ShowTodo(){
+function listTodos(){
     const todos = LoadTodos();
 
     if(todos.length == 0){
         console.log("you have complete all quests 🥳")
+        return;
     }
 
     console.log("\nyour tasks:")
     todos.forEach(todo => {
-        const status = todo.complete ? "✔️" : "◯";
-        console.log(`${status} [${todo.length}] ${todo.title}`)
+        const status = todo.completed ? "✔️" : "◯";
+        console.log(`${status} [${todo.id}] ${todo.title}`)
     });
 }
 
@@ -51,7 +52,7 @@ function completeTodo(id) {
   }
   
   todo.completed = true;
-  saveTodos(todos);
+  SaveTodo(todos);
   console.log(`✓ task is now complete: "${todo.title}"`);
 }
 
