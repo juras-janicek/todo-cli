@@ -47,7 +47,7 @@ function completeTodo(id) {
   const todo = todos.find(t => t.id === Number(id));
   
   if (!todo) {
-    console.log('Úkol nenalezen.');
+    console.log('task not found');
     return;
   }
   
@@ -55,6 +55,27 @@ function completeTodo(id) {
   SaveTodo(todos);
   console.log(`✓ task is now complete: "${todo.title}"`);
 }
+
+function clearTodosAll(){
+  const todos = [];
+  SaveTodo(todos);
+  console.log("all tasks are cleared now")
+}
+
+function clearTodos(id){
+  const todos = LoadTodos();
+  const index = todos.findIndex(t => t.id === Number(id));
+
+  if (index === -1) {
+    console.log(`task ${id} not found`);
+    return;
+  }
+
+  const removed = todos.splice(index, 1)[0];
+  SaveTodo(todos);
+  console.log(`task ${removed.id} has been deleted`);
+}
+
 
 const command = process.argv[2];
 const arg = process.argv[3];
@@ -65,11 +86,18 @@ if (command === 'add' && arg) {
   listTodos();
 } else if (command === 'done' && arg) {
   completeTodo(arg);
-} else {
+} else if (command === 'clear' && arg) {
+  clearTodos(arg);
+} else if (command === 'delete'){
+  clearTodosAll();
+}
+else {
   console.log(`
 Použití:
   npm start add "Nový úkol"     - Přidat úkol
   npm start list                - Zobrazit všechny úkoly
   npm start done 1              - Označit úkol 1 jako hotový
+  npm start clear 1             - Smazat úkol 1
+  npm start delete              - Vymazat všechny úkoly
   `);
 }
